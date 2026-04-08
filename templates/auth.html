@@ -5,28 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auth System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./static/css/auth.css') }}">
 </head>
 <body>
-<div class="metrics-bar">
-    <div class="metric-item">
-        <span class="label">Online</span>
-        <span class="value"><!--<br />
-<b>Warning</b>:  Undefined variable $online in <b>C:\xampp\htdocs\testing\NR\index.php</b> on line <b>361</b><br />
--->0</span>
-    </div>
-    <div class="metric-item">
-        <span class="label">Users</span>
-        <span class="value"><!--<br />
-<b>Warning</b>:  Undefined variable $registered in <b>C:\xampp\htdocs\testing\NR\index.php</b> on line <b>365</b><br />
--->4</span>
-    </div>
-    <div class="metric-item">
-        <span class="label">Modes</span>
-        <span class="value"><!--<br />
-<b>Warning</b>:  Undefined variable $calcs in <b>C:\xampp\htdocs\testing\NR\index.php</b> on line <b>369</b><br />
--->19</span>
-    </div>
-</div>
 <div class="ffx-wrapper">
   <!-- The Modern Tag -->
   <h1 class="ffx-tag">Fish Fx 2026 0.0.17</h1>
@@ -97,74 +78,6 @@
           }, 3500);*/
           </script>
 
-          <script>
-            class UI {
-              static switch(target) {
-                document.querySelectorAll('form').forEach(f => f.classList.add('hidden'));
-                document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
-
-                document.getElementById(`form-${target}`).classList.remove('hidden');
-                document.getElementById(`tab-${target}`).classList.add('active');
-              }
-
-              static showModal(html) {
-                document.getElementById('modal-body').innerHTML = html;
-                document.getElementById('modal-overlay').style.display = 'flex';
-              }  
-              static closeModal() {
-                document.getElementById('modal-overlay').style.display = 'none';
-              }
-            }
-            class AuthAPI {
-              static async submit(e, action) {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                formData.append('action', action);
-
-                if (action === 'register') {
-                  if (document.getElementById('reg-p1').value !== document.getElementById('reg-p2').value) {
-                    return UI.showModal("<span style='color:red'>Passwords do not match!</span>");
-                  }
-                }
-
-                try {
-                  const response = await fetch('api.php', { method: 'POST', body: formData });
-                  const result = await response.json();
-                
-                  let output = `<h3>${result.status.toUpperCase()}</h3><p>${result.message}</p>`;
-              
-                  if (result.mnemonic) {
-                    output += `<div style="background:#eee; padding:10px; font-size:0.8rem; text-align:left;">
-                      <strong>Mnemonic:</strong> ${result.mnemonic}<br><br>
-                      <strong>Secure Key:</strong> ${result.secure_key}
-                    </div><p><em>Save these! You cannot recover your account without them.</em></p>`;
-                  }
-
-                  UI.showModal(output);
-              } catch (err) {
-                  UI.showModal("Critical Error: Could not connect to API.");
-              }
-          }
-      }
-
-      document.addEventListener('DOMContentLoaded', () => {
-      const settingsBtn = document.getElementById('btn-settings');
-      const dmsBtn = document.getElementById('btn-dms');
-
-      settingsBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        console.log('Toggle Settings Page');
-      });
-
-      dmsBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        console.log('Toggle DMs Page');
-      });
-    });
-    document.getElementById('form-login').onsubmit = (e) => AuthAPI.submit(e, 'login');
-    document.getElementById('form-register').onsubmit = (e) => AuthAPI.submit(e, 'register');
-    document.getElementById('form-forgot').onsubmit = (e) => AuthAPI.submit(e, 'forgot');
-</script>
 
 <div class="modern-button-container"  class="logo-text">
   <a href="#settings" class="m-btn-pill pastel-purple" id="btn-settings" aria-label="Settings">
